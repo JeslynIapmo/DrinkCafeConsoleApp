@@ -1,0 +1,7 @@
+C:\Source\Repos\Training\DrinksConsoleApp\DrinksConsoleApp\bin\Debug\DrinksConsoleApp.exe.config
+C:\Source\Repos\Training\DrinksConsoleApp\DrinksConsoleApp\bin\Debug\DrinksConsoleApp.exe
+C:\Source\Repos\Training\DrinksConsoleApp\DrinksConsoleApp\bin\Debug\DrinksConsoleApp.pdb
+C:\Source\Repos\Training\DrinksConsoleApp\DrinksConsoleApp\obj\Debug\DrinksConsoleApp.csprojAssemblyReference.cache
+C:\Source\Repos\Training\DrinksConsoleApp\DrinksConsoleApp\obj\Debug\DrinksConsoleApp.csproj.CoreCompileInputs.cache
+C:\Source\Repos\Training\DrinksConsoleApp\DrinksConsoleApp\obj\Debug\DrinksConsoleApp.exe
+C:\Source\Repos\Training\DrinksConsoleApp\DrinksConsoleApp\obj\Debug\DrinksConsoleApp.pdb
