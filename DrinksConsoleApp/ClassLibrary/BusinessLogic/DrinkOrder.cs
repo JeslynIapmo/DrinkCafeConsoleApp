@@ -1,45 +1,56 @@
 ﻿using System;
+using DrinksConsoleApp.ClassLibrary.Models;
 
 namespace DrinksConsoleApp
 {
     public class DrinkOrder
     {
         UserMenu userMenu = new UserMenu();
-        DrinkOption drinkOption = new DrinkOption();
+        DrinkOptionMenu drinkOptionMenu = new DrinkOptionMenu();
+        JuiceMenu juiceMenu = new JuiceMenu();
         Validate validate = new Validate();
-        Juice juice = new Juice();
 
         public void JuiceOrder()
         {
+            Juice juice = new Juice();
+
             // asking & taking size order
-            drinkOption.Size();
-            string sizeChoice = Console.ReadLine();
+            drinkOptionMenu.Size();
+            string sizeChoiceInput = Console.ReadLine();
 
             // checking for valid size input
-            if (validate.isUserOrderValid(sizeChoice))
+            if (validate.DrinkSize(sizeChoiceInput))
             {
                 //re-asking question if invalid
-                drinkOption.Size();
+                drinkOptionMenu.Size();
                 string userInput = Console.ReadLine();
-                sizeChoice = userInput;
+                juice.DrinkSize = userInput;
+
+            } else
+            {
+                juice.DrinkSize = sizeChoiceInput;
+
             }
 
             // asking & taking flavor order
-            juice.Flavor();
-            string flavorChoice = Console.ReadLine();
+            juiceMenu.Flavor();
+            string flavorChoiceInput = Console.ReadLine();
 
-            // checking for valid size input
-            if (validate.isUserOrderValid(flavorChoice))
+            // checking for valid flavor input
+            if (validate.FlavorOrder(flavorChoiceInput))
             {
                 //re-asking question if invalid
-                juice.Flavor();
+                juiceMenu.Flavor();
                 string userInput = Console.ReadLine();
-                flavorChoice = userInput;
+                juice.Flavor = userInput;
+            } else
+            {
+                juice.Flavor = flavorChoiceInput;
             }
 
             // final order message
             Console.WriteLine("Wonderful. Here's your juice order:");
-            Console.WriteLine($"A {sizeChoice} {flavorChoice} juice for $3.25.");
+            Console.WriteLine($"A {juice.DrinkSize} {juice.Flavor} juice for $3.25.");
 
             // asking for second order
             userMenu.AnotherOrder();
@@ -47,67 +58,104 @@ namespace DrinksConsoleApp
 
         public void TeaOrder()
         {
-            drinkOption.Size();
-            string sizeChoice = Console.ReadLine();
+            Tea tea = new Tea();
 
-            if (validate.isUserOrderValid(sizeChoice))
+            // asking & taking size order
+            drinkOptionMenu.Size();
+            string sizeChoiceInput = Console.ReadLine();
+
+            // checking for valid size input
+            if (validate.DrinkSize(sizeChoiceInput))
             {
-                drinkOption.Size();
+                // if invalid, asking again
+                drinkOptionMenu.Size();
                 string userInput = Console.ReadLine();
-                sizeChoice = userInput;
+                tea.DrinkSize = userInput;
+            } else
+            {
+                tea.DrinkSize = sizeChoiceInput;
             }
 
-            drinkOption.Temp();
-            string tempChoice = Console.ReadLine();
+            // asking & taking temperature order
+            drinkOptionMenu.Temp();
+            string tempChoiceInput = Console.ReadLine();
 
-            if (validate.isUserOrderValid(tempChoice))
+            // validating temperature order
+            if (validate.TempOrder(tempChoiceInput))
             {
-                drinkOption.Temp();
+                // if invalid, asking again
+                drinkOptionMenu.Temp();
                 string userInput = Console.ReadLine();
-                tempChoice = userInput;
-
+                tea.Temperature = userInput;
+            } else
+            {
+                tea.Temperature = tempChoiceInput;
             }
 
             Console.WriteLine("Would you like sugar for .50 more? 'y' or 'n'?");
-            string sugarOption = Console.ReadLine();
+            string sugarOptionInput = Console.ReadLine();
 
-            if (sugarOption == "y")
+            // validating sugar option
+            if (validate.SugarOption(sugarOptionInput))
             {
-                drinkOption.SugarAmount();
-                string sugarChoice = Console.ReadLine();
+                // if invalid, asking again
+                Console.WriteLine("Would you like sugar for .50 more? 'y' or 'n'?");
+                string userInput = Console.ReadLine();
+                if (userInput == "y")
+                {
+                    tea.SugarOption = true;
+                } else
+                {
+                    tea.SugarOption = false;
+                }
+            }
+
+            if (tea.SugarOption == true)
+            {
+                drinkOptionMenu.SugarAmount();
+                string sugarChoiceInput = Console.ReadLine();
+                tea.SugarAmount = sugarChoiceInput;
 
                 Console.WriteLine("Wonderful. Here's your tea order:");
-                Console.WriteLine($"A {tempChoice} tea with {sugarChoice} sugar for $1.75.");
+                Console.WriteLine($"A {tea.DrinkSize}, {tea.Temperature}, tea with {tea.SugarAmount} sugar for $1.75.");
                 userMenu.AnotherOrder();
             }
             else
             {
                 Console.WriteLine("Wonderful. Here's your tea order:");
-                Console.WriteLine($"A {tempChoice} tea with no sugar for $1.25.");
+                Console.WriteLine($"A {tea.DrinkSize}, {tea.Temperature}, tea with no sugar for $1.25.");
                 userMenu.AnotherOrder();
             }
         }
 
         public void CoffeeOrder()
         {
-            drinkOption.Size();
-            string sizeChoice = Console.ReadLine();
+            Coffee coffee = new Coffee();
 
-            if (validate.isUserOrderValid(sizeChoice))
+            drinkOptionMenu.Size();
+            string sizeChoiceInput = Console.ReadLine();
+
+            if (validate.DrinkSize(sizeChoiceInput))
             {
-                drinkOption.Size();
+                drinkOptionMenu.Size();
                 string userInput = Console.ReadLine();
-                sizeChoice = userInput;
+                coffee.DrinkSize = userInput;
+            } else
+            {
+                coffee.DrinkSize = sizeChoiceInput;
             }
 
-            drinkOption.Temp();
-            string tempChoice = Console.ReadLine();
-
-            if (validate.isUserOrderValid(tempChoice))
+            drinkOptionMenu.Temp();
+            string tempChoiceInput = Console.ReadLine();
+            
+            if (validate.TempOrder(tempChoiceInput))
             {
-                drinkOption.Temp();
+                drinkOptionMenu.Temp();
                 string userInput = Console.ReadLine();
-                tempChoice = userInput;
+                coffee.Temperature = userInput;
+            } else
+            {
+                coffee.Temperature = tempChoiceInput;
             }
 
             userMenu.CoffeeExtras();
@@ -115,32 +163,41 @@ namespace DrinksConsoleApp
 
             switch (coffeeAddInChoice)
             {
-                case "a":
-                    drinkOption.CreamAmount();
-                    string creamChoice = Console.ReadLine();
+                case "a": // cream only
+                    drinkOptionMenu.CreamAmount();
+                    string creamChoiceInput = Console.ReadLine();
+                    coffee.CreamAmount = creamChoiceInput;
+                    // final total
                     Console.WriteLine("Wonderful. Here's your coffee order:");
-                    Console.WriteLine($"A {sizeChoice} {tempChoice} coffee with {creamChoice} cream and no sugar for $3.00.");
+                    Console.WriteLine($"A {coffee.DrinkSize}, {coffee.Temperature}, coffee with {coffee.CreamAmount} cream and no sugar for $3.00.");
                     userMenu.AnotherOrder();
                     break;
-                case "b":
-                    drinkOption.SugarAmount();
-                    string sugarChoice = Console.ReadLine();
+                case "b": // sugar only
+                    drinkOptionMenu.SugarAmount();
+                    string sugarChoiceInput = Console.ReadLine();
+                    coffee.SugarAmount = sugarChoiceInput;
+                    // final total
                     Console.WriteLine("Wonderful. Here's your coffee order:");
-                    Console.WriteLine($"A {sizeChoice} {tempChoice} coffee with {sugarChoice} sugar and no cream for $2.75.");
+                    Console.WriteLine($"A {coffee.DrinkSize}, {coffee.Temperature}, coffee with {coffee.SugarAmount} sugar and no cream for $2.75.");
                     userMenu.AnotherOrder();
                     break;
-                case "c":
-                    drinkOption.CreamAmount();
-                    string creamSelected = Console.ReadLine();
-                    drinkOption.SugarAmount();
-                    string sugarSelectd = Console.ReadLine();
+                case "c":  // cream and sugar
+                    // cream order
+                    drinkOptionMenu.CreamAmount();
+                    string creamSelectedInput = Console.ReadLine();
+                    coffee.CreamAmount = creamSelectedInput;
+                    // sugar order
+                    drinkOptionMenu.SugarAmount();
+                    string sugarSelectdInput = Console.ReadLine();
+                    coffee.SugarAmount = sugarSelectdInput;
+                    // final total
                     Console.WriteLine("Wonderful. Here's your coffee order:");
-                    Console.WriteLine($"A {sizeChoice} {tempChoice} coffee with {creamSelected} cream and {sugarSelectd} sugar for $3.50.");
+                    Console.WriteLine($"A {coffee.DrinkSize}, {coffee.Temperature}, coffee with {coffee.CreamAmount} cream and {coffee.SugarAmount} sugar for $3.50.");
                     userMenu.AnotherOrder();
                     break;
-                case "d":
+                case "d": // no cream or sugar
                     Console.WriteLine("Wonderful. Here's your coffee order:");
-                    Console.WriteLine($"A {sizeChoice} {tempChoice} coffee with no cream or sugar for $2.25.");
+                    Console.WriteLine($"A {coffee.DrinkSize}, {coffee.Temperature}, coffee with no cream or sugar for $2.25.");
                     userMenu.AnotherOrder();
                     break;
                 default:

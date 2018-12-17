@@ -2,7 +2,7 @@
 
 namespace DrinksConsoleApp
 {
-    public class Juice
+    public class JuiceMenu
     {
         public void Flavor()
         {

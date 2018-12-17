@@ -42,9 +42,9 @@ namespace DrinksConsoleApp
         {
             Console.WriteLine("How about your add-ons? Enter the letter.");
             Console.WriteLine("a: with cream, no sugar for .75 more");
-            Console.WriteLine("b. no cream, but with sugar for .50 more");
-            Console.WriteLine("c. with cream and sugar for 1.15 more");
-            Console.WriteLine("d. no cream or sugar");
+            Console.WriteLine("b: no cream, but with sugar for .50 more");
+            Console.WriteLine("c: with cream and sugar for 1.15 more");
+            Console.WriteLine("d: no cream or sugar");
             Console.WriteLine();
 
         }

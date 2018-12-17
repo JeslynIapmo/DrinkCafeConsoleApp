@@ -2,7 +2,7 @@
 
 namespace DrinksConsoleApp
 {
-    public class DrinkOption
+    public class DrinkOptionMenu
     {
         public void Size()
         {
